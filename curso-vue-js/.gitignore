@@ -1,0 +1,4 @@
+
+# Editor directories and files
+.vscode/settings.json
+!.vscode/settings-example.json
