@@ -1,50 +1,18 @@
 <template>
-  <section>
-    <header>
-      <h1>My Friends</h1>
-    </header>
-  </section>
+  <the-header :title="'RememberMe'"></the-header>
+  <the-resources :resources="storedResources"></the-resources>
 </template>
 
 <script>
+import TheHeader from './components/layouts/TheHeader.vue';
+import TheResources from './components/learning-resources/TheResources.vue';
+
 export default {
-  data() {
-    return {
-      friends: [
-        {
-          id: 'manuel',
-          name: 'Manuel Lorenz',
-          phone: '01234 5678 991',
-          email: 'manuel@localhost.com',
-          isFavorite: true,
-        },
-        {
-          id: 'julie',
-          name: 'Julie Jones',
-          phone: '01234 4488 991',
-          email: 'julie@localhost.com',
-          isFavorite: false,
-        },
-      ],
-    };
+  components: {
+    TheHeader,
+    TheResources,
   },
   methods: {
-    toggleFavoriteFriend(friendId) {
-      const theFriend = this.friends.find((friend) => friend.id == friendId);
-      if (theFriend) {
-        theFriend.isFavorite = !theFriend.isFavorite;
-      }
-    },
-    addContact(name, phone, email) {
-      const newFriendContact = {
-        id: new Date().toISOString(),
-        name,
-        phone,
-        email,
-        isFavorite: false,
-      };
-      this.friends.push(newFriendContact);
-    },
     deleteContact(friendId) {
       this.friends = this.friends.filter((f) => f.id !== friendId);
     },
@@ -53,17 +21,17 @@ export default {
 </script>
 
 <style>
-#app input {
-  font: inherit;
-  padding: 0.15rem;
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+* {
+  box-sizing: border-box;
 }
-#app label {
-  font-weight: bold;
-  margin-right: 1rem;
-  width: 7rem;
-  display: inline-block;
+
+html {
+  font-family: 'Roboto', sans-serif;
 }
-#app form div {
-  margin: 1rem 0;
+
+body {
+  margin: 0;
 }
 </style>
