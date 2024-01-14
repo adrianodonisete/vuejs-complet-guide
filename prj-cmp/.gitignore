@@ -14,11 +14,16 @@ pnpm-debug.log*
 
 # Editor directories and files
 .idea
-.vscode
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
 
+<<<<<<< HEAD
 *-lock.json
+=======
+
+.vscode/settings.json
+!.vscode/settings-example.json
+>>>>>>> 653b34590cead5c902a5e0c0adcb934522ed20af
