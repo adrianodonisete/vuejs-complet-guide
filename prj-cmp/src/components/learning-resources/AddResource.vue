@@ -1,10 +1,70 @@
 <template>
-  <h2>Add Resource</h2>
+  <base-dialog
+    v-if="inputIsInvalid"
+    title="Invalid Input"
+    @close="confirmError"
+  >
+    <template #default>
+      <p>Please, type at least one characater</p>
+    </template>
+    <template #actions>
+      <base-button @click="confirmError">Ok</base-button>
+    </template>
+  </base-dialog>
+
+  <base-card>
+    <form @submit.prevent="submitData">
+      <div class="form-control">
+        <label for="title">Title</label>
+        <input id="title" name="title" type="text" ref="titleInput" />
+      </div>
+
+      <div class="form-control">
+        <label for="description">Description</label>
+        <textarea
+          name="description"
+          id="description"
+          rows="4"
+          ref="descInput"
+        ></textarea>
+      </div>
+
+      <div class="form-control">
+        <label for="link">Link</label>
+        <input id="link" name="link" type="text" ref="linkInput" />
+      </div>
+
+      <div>
+        <base-button type="submit">Add Resource</base-button>
+      </div>
+    </form>
+  </base-card>
 </template>
 
 <script>
 export default {
-  // props: ['resources'],
+  inject: ['addResource'],
+  data() {
+    return {
+      inputIsInvalid: false,
+    };
+  },
+  methods: {
+    submitData() {
+      const entTitle = this.$refs.titleInput.value.trim();
+      const entDesc = this.$refs.descInput.value.trim();
+      const entLink = this.$refs.linkInput.value.trim();
+
+      if (entTitle === '' || entDesc === '' || entLink === '') {
+        this.inputIsInvalid = true;
+        return;
+      }
+      this.addResource(entTitle, entDesc, entLink);
+    },
+    confirmError() {
+      this.inputIsInvalid = false;
+    },
+  },
 };
 </script>
 

@@ -3,11 +3,13 @@
     <base-card>
       <header>
         <h3>{{ title }}</h3>
-        <base-button type="button" mode="flat">Delete</base-button>
+        <base-button type="button" mode="flat" @click="removeResource(id)">
+          Delete
+        </base-button>
       </header>
       <p>{{ description }}</p>
       <nav>
-        <a href="{{ link }}">View Resource</a>
+        <a :href="link">View Resource</a>
       </nav>
     </base-card>
   </li>
@@ -15,16 +17,8 @@
 
 <script>
 export default {
-  props: ['title', 'description', 'link'],
-
-  methods: {
-    toggleFavoriteFriend(friendId) {
-      const theFriend = this.friends.find((friend) => friend.id == friendId);
-      if (theFriend) {
-        theFriend.isFavorite = !theFriend.isFavorite;
-      }
-    },
-  },
+  props: ['id', 'title', 'description', 'link'],
+  inject: ['removeResource'],
 };
 </script>
 

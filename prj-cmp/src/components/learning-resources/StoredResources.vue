@@ -3,6 +3,7 @@
     <learning-resource
       v-for="res in resources"
       :key="res.id"
+      :id="res.id"
       :title="res.title"
       :description="res.description"
       :link="res.link"
@@ -15,15 +16,6 @@ import LearningResource from './LearningResource.vue';
 export default {
   components: { LearningResource },
   inject: ['resources'],
-
-  methods: {
-    toggleFavoriteFriend(friendId) {
-      const theFriend = this.friends.find((friend) => friend.id == friendId);
-      if (theFriend) {
-        theFriend.isFavorite = !theFriend.isFavorite;
-      }
-    },
-  },
 };
 </script>
 
