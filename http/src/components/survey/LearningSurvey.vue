@@ -57,7 +57,7 @@
 </template>
 
 <script>
-const FIREBASE_URL = 'https://vue-http-9e151-default-rtdb.firebaseio.com/';
+import { FIREBASE_URL } from './../../utils/constants.vue';
 import axios from 'axios';
 
 export default {

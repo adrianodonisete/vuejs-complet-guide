@@ -2,11 +2,13 @@
   <section>
     <base-card>
       <h2>Submitted Experiences</h2>
+
       <div>
         <base-button @click="loadExperiences">
           Load Submitted Experiences
         </base-button>
       </div>
+
       <ul>
         <survey-result
           v-for="result in results"
@@ -20,7 +22,7 @@
 </template>
 
 <script>
-const FIREBASE_URL = 'https://vue-http-9e151-default-rtdb.firebaseio.com/';
+import { FIREBASE_URL } from './../../utils/constants.vue';
 import axios from 'axios';
 import SurveyResult from './SurveyResult.vue';
 
@@ -36,7 +38,28 @@ export default {
   },
   methods: {
     loadExperiences() {
-      this.getSurveysFetch();
+      this.getSurveysAxios();
+    },
+    getSurveysAxios() {
+      // how to use
+      // https://axios-http.com/docs/api_intro e https://axios-http.com/docs/res_schema
+      axios
+        .get(`${FIREBASE_URL}/surveys.json`)
+        .then((response) => response.data)
+        .then((data) => {
+          const results = [];
+          for (const id in data) {
+            results.push({
+              id: id,
+              name: data[id]['name'],
+              rating: data[id]['rating'],
+            });
+          }
+          this.results = results;
+        })
+        .catch((e) => {
+          console.error(e);
+        });
     },
     getSurveysFetch() {
       fetch(`${FIREBASE_URL}/surveys.json`)
@@ -57,21 +80,6 @@ export default {
             });
           }
           this.results = results;
-        })
-        .catch((e) => {
-          console.error(e);
-        });
-    },
-    getSurveysAxios() {
-      axios
-        .get(`${FIREBASE_URL}/surveys.json`)
-        .then((res) => {
-          if (res.ok) {
-            return res.json();
-          }
-        })
-        .then((surveys) => {
-          console.log(surveys);
         })
         .catch((e) => {
           console.error(e);
