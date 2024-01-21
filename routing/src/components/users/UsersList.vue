@@ -21,7 +21,10 @@ export default {
 	methods: {
 		confirmInput() {
 			//do something
-			this.$router.push('/teams?teste=20');
+			this.$router.push({
+				name: 'teams',
+				query: { teste: 'valor 1' },
+			});
 		},
 	},
 };
