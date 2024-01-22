@@ -59,8 +59,7 @@
 </template>
 
 <script>
-import { FIREBASE_URL } from './../../utils/constants.vue';
-import axios from 'axios';
+import { addSurvey } from './../../services/SurveyService';
 
 export default {
 	data() {
@@ -73,25 +72,42 @@ export default {
 	},
 	// emits: ['survey-submit'],
 	methods: {
-		submitSurvey() {
+		async submitSurvey() {
 			if (this.enteredName === '' || !this.chosenRating) {
 				this.invalidInput = true;
 				return;
 			}
 			this.invalidInput = false;
+			this.error = null;
 
-			// this.$emit('survey-submit', {
-			//   userName: this.enteredName,
-			//   rating: this.chosenRating,
-			// });
-
-			this.saveSurvey();
+			const survey = {
+				name: this.enteredName,
+				rating: this.chosenRating,
+			};
+			try {
+				await addSurvey(survey);
+			} catch (e) {
+				this.error = e.message;
+			}
 
 			this.enteredName = '';
 			this.chosenRating = null;
 		},
 
 		saveSurvey() {
+			// axios
+			// 	.post(`${FIREBASE_URL}/surveys.json`, theBody)
+			// 	.then(response => {
+			// 		console.log(response.statusText);
+			// 		if (response.statusText != 'OK') {
+			// 			console.log('error');
+			// 			throw new Error('Could not save data! ' + response.statusText);
+			// 		}
+			// 	})
+			// 	.catch(e => {
+			// 		console.log(e);
+			// 		this.error = e.message;
+			// 	});
 			// fetch(`${FIREBASE_URL}/surveys.json`, {
 			//   method: 'POST',
 			//   headers: {
@@ -102,26 +118,6 @@ export default {
 			//     rating: this.chosenRating,
 			//   }),
 			// });
-
-			const theBody = {
-				name: this.enteredName,
-				rating: this.chosenRating,
-			};
-
-			this.error = null;
-			axios
-				.post(`${FIREBASE_URL}/surveys.json`, theBody)
-				.then(response => {
-					console.log(response.statusText);
-					if (response.statusText != 'OK') {
-						console.log('error');
-						throw new Error('Could not save data! ' + response.statusText);
-					}
-				})
-				.catch(e => {
-					console.log(e);
-					this.error = e.message;
-				});
 		},
 	},
 };

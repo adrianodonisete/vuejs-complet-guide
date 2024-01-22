@@ -22,8 +22,7 @@
 </template>
 
 <script>
-import { FIREBASE_URL } from './../../utils/constants.vue';
-import axios from 'axios';
+import { allSurveys } from './../../services/SurveyService';
 import SurveyResult from './SurveyResult.vue';
 
 export default {
@@ -42,58 +41,57 @@ export default {
 		this.loadExperiences();
 	},
 	methods: {
-		loadExperiences() {
-			this.getSurveysAxios();
-		},
-		getSurveysAxios() {
-			// how to use
-			// https://axios-http.com/docs/api_intro e https://axios-http.com/docs/res_schema
-
+		async loadExperiences() {
 			this.isLoading = true;
 			this.error = null;
-			axios
-				.get(`${FIREBASE_URL}/surveys.json`)
-				.then(response => response.data)
-				.then(data => {
-					const results = [];
-					for (const id in data) {
-						results.push({
-							id: id,
-							name: data[id]['name'],
-							rating: data[id]['rating'],
-						});
-					}
-					this.results = results;
-				})
-				.catch(e => {
-					console.error(e);
-					this.error = 'Failed to fetch data. Try again.';
-				})
-				.finally(() => (this.isLoading = false));
+			const results = [];
+
+			try {
+				const data = await allSurveys();
+				for (const id in data) {
+					results.push({
+						id: id,
+						name: data[id]['name'],
+						rating: data[id]['rating'],
+					});
+				}
+				console.log(data);
+			} catch (error) {
+				this.error = error;
+				console.error(error);
+			}
+
+			this.results = results;
+			this.isLoading = false;
+		},
+		async getSurveysAxios() {
+			// how to use
+			// https://axios-http.com/docs/api_intro e https://axios-http.com/docs/res_schema
+			// TODO: criar service SurveyService
+			//      -> https://jerickson.net/what-are-services-vue/
 		},
 		getSurveysFetch() {
-			fetch(`${FIREBASE_URL}/surveys.json`)
-				.then(res => {
-					if (res.ok) {
-						return res.json();
-					}
-				})
-				.then(data => {
-					console.log(data);
-
-					const results = [];
-					for (const id in data) {
-						results.push({
-							id: id,
-							name: data[id]['name'],
-							rating: data[id]['rating'],
-						});
-					}
-					this.results = results;
-				})
-				.catch(e => {
-					console.error(e);
-				});
+			// fetch(`${FIREBASE_URL}/surveys.json`)
+			// 	.then(res => {
+			// 		if (res.ok) {
+			// 			return res.json();
+			// 		}
+			// 	})
+			// 	.then(data => {
+			// 		console.log(data);
+			// 		const results = [];
+			// 		for (const id in data) {
+			// 			results.push({
+			// 				id: id,
+			// 				name: data[id]['name'],
+			// 				rating: data[id]['rating'],
+			// 			});
+			// 		}
+			// 		this.results = results;
+			// 	})
+			// 	.catch(e => {
+			// 		console.error(e);
+			// 	});
 		},
 	},
 };
