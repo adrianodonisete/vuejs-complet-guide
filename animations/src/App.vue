@@ -5,12 +5,21 @@
 			:class="{ animate: animatedBlock }"></div>
 		<button @click="animateBlock">Animate</button>
 	</div>
+
+	<div class="container">
+		<transition name="para">
+			<p v-if="paragIsVisible">This is only somitimes visible</p>
+		</transition>
+		<button @click="toggleParagraph">Toggle Paragraph</button>
+	</div>
+
 	<base-modal
 		@close="hideDialog"
 		v-if="dialogIsVisible">
 		<p>This is a test dialog!</p>
 		<button @click="hideDialog">Close it!</button>
 	</base-modal>
+
 	<div class="container">
 		<button @click="showDialog">Show Dialog</button>
 	</div>
@@ -22,11 +31,15 @@ export default {
 		return {
 			animatedBlock: false,
 			dialogIsVisible: false,
+			paragIsVisible: false,
 		};
 	},
 	methods: {
 		animateBlock() {
 			this.animatedBlock = true;
+		},
+		toggleParagraph() {
+			this.paragIsVisible = !this.paragIsVisible;
 		},
 		showDialog() {
 			this.dialogIsVisible = true;
@@ -84,6 +97,80 @@ button:active {
 .animate {
 	/* transform: translateX(-150px); */
 	animation: slide-fade 0.3s ease-out forwards;
+}
+
+.v-enter-from {
+	/* opacity: 0;
+	transform: translateY(-30px); */
+}
+
+.v-enter-active {
+	/* transition: all 0.3s ease-out; */
+	animation: slide-scale 0.4s ease-out;
+}
+
+.v-enter-to {
+	/* opacity: 1;
+	transform: translateY(0); */
+}
+
+.v-leave-from {
+	/* opacity: 1;
+	transform: translateY(0); */
+}
+
+.v-leave-active {
+	/* transition: all 0.3s ease-in; */
+	animation: slide-scale 0.4s ease-in;
+}
+
+.v-leave-to {
+	/* opacity: 0;
+	transform: translateY(30px); */
+}
+
+.para-enter-from {
+	/* opacity: 0;
+	transform: translateY(-30px); */
+}
+
+.para-enter-active {
+	/* transition: all 0.3s ease-out; */
+	animation: slide-scale 0.4s ease-out;
+}
+
+.para-enter-to {
+	/* opacity: 1;
+	transform: translateY(0); */
+}
+
+.para-leave-from {
+	/* opacity: 1;
+	transform: translateY(0); */
+}
+
+.para-leave-active {
+	/* transition: all 0.3s ease-in; */
+	animation: slide-scale 0.4s ease-in;
+}
+
+.para-leave-to {
+	/* opacity: 0;
+	transform: translateY(30px); */
+}
+
+@keyframes slide-scale {
+	0% {
+		transform: translateX(0) scale(1);
+	}
+
+	70% {
+		transform: translateX(-120px) scale(1.1);
+	}
+
+	100% {
+		transform: translateX(-150px) scale(1);
+	}
 }
 
 @keyframes slide-fade {
