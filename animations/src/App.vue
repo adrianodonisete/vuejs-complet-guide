@@ -7,21 +7,53 @@
 	</div>
 
 	<div class="container">
-		<transition name="para">
-			<p v-if="paragIsVisible">This is only somitimes visible</p>
+		<transition
+			name="fade-button"
+			mode="out-in">
+			<button
+				@click="showUsers"
+				v-if="!usersAreVisible">
+				Show Users
+			</button>
+			<button
+				@click="hideUsers"
+				v-else>
+				Hide Users
+			</button>
+		</transition>
+	</div>
+
+	<div class="container">
+		<transition
+			name="para"
+			@before-enter="myBeforeEnter"
+			@enter="myEnter"
+			@after-enter="myAfterEnter">
+			<p v-if="paragIsVisible">This is only sometimes visible</p>
 		</transition>
 		<button @click="toggleParagraph">Toggle Paragraph</button>
 	</div>
 
 	<base-modal
 		@close="hideDialog"
-		v-if="dialogIsVisible">
+		:open="dialogIsVisible">
 		<p>This is a test dialog!</p>
 		<button @click="hideDialog">Close it!</button>
 	</base-modal>
 
 	<div class="container">
 		<button @click="showDialog">Show Dialog</button>
+	</div>
+
+	<div class="container">
+		<transition
+			name="new-para"
+			@before-enter="myBeforeEnter"
+			@enter="myEnter"
+			@after-enter="myAfterEnter">
+			<p v-if="newParaIsVisible">This is the new paragraph</p>
+		</transition>
+		<button @click="toggleNewParagraph">New Paragraph</button>
 	</div>
 </template>
 
@@ -32,14 +64,37 @@ export default {
 			animatedBlock: false,
 			dialogIsVisible: false,
 			paragIsVisible: false,
+			newParaIsVisible: false,
+			usersAreVisible: false,
 		};
 	},
 	methods: {
+		myBeforeEnter(el) {
+			console.log('myBeforeEnter');
+			console.log(el);
+		},
+		myEnter(el) {
+			console.log('myEnter');
+			console.log(el);
+		},
+		myAfterEnter(el) {
+			console.log('myAfterEnter');
+			console.log(el);
+		},
+		showUsers() {
+			this.usersAreVisible = true;
+		},
+		hideUsers() {
+			this.usersAreVisible = false;
+		},
 		animateBlock() {
 			this.animatedBlock = true;
 		},
 		toggleParagraph() {
 			this.paragIsVisible = !this.paragIsVisible;
+		},
+		toggleNewParagraph() {
+			this.newParaIsVisible = !this.newParaIsVisible;
 		},
 		showDialog() {
 			this.dialogIsVisible = true;
@@ -155,6 +210,51 @@ button:active {
 }
 
 .para-leave-to {
+	/* opacity: 0;
+	transform: translateY(30px); */
+}
+
+.fade-button-enter-from,
+.fade-button-leave-from {
+	opacity: 0;
+}
+.fade-button-enter-active {
+	transition: opacity 0.3s ease-out;
+}
+.fade-button-leave-active {
+	transition: opacity 0.3s ease-in;
+}
+.fade-button-enter-to,
+.fade-button-leave-to {
+	opacity: 1;
+}
+
+.new-para-enter-from {
+	/* opacity: 0;
+	transform: translateY(-30px); */
+}
+
+.new-para-enter-active {
+	/* transition: all 0.3s ease-out; */
+	animation: slide-scale 0.4s ease-out;
+}
+
+.new-para-enter-to {
+	/* opacity: 1;
+	transform: translateY(0); */
+}
+
+.new-para-leave-from {
+	/* opacity: 1;
+	transform: translateY(0); */
+}
+
+.new-para-leave-active {
+	/* transition: all 0.3s ease-in; */
+	animation: slide-scale 0.4s ease-in;
+}
+
+.new-para-leave-to {
 	/* opacity: 0;
 	transform: translateY(30px); */
 }
