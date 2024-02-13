@@ -1,5 +1,9 @@
 <template>
 	<div class="container">
+		<list-data></list-data>
+	</div>
+
+	<div class="container">
 		<div
 			class="block"
 			:class="{ animate: animatedBlock }"></div>
@@ -23,7 +27,9 @@
 		</transition>
 	</div>
 
-	<div class="container">
+	<div
+		class="container"
+		style="display: none">
 		<transition
 			name="para"
 			@before-enter="myBeforeEnter"
@@ -32,6 +38,19 @@
 			<p v-if="paragIsVisible">This is only sometimes visible</p>
 		</transition>
 		<button @click="toggleParagraph">Toggle Paragraph</button>
+	</div>
+
+	<div
+		class="container"
+		style="display: none">
+		<transition
+			name="new-para"
+			@before-enter="myBeforeEnter"
+			@enter="myEnter"
+			@after-enter="myAfterEnter">
+			<p v-if="newParaIsVisible">This is the new paragraph</p>
+		</transition>
+		<button @click="toggleNewParagraph">New Paragraph</button>
 	</div>
 
 	<base-modal
@@ -47,18 +66,26 @@
 
 	<div class="container">
 		<transition
-			name="new-para"
-			@before-enter="myBeforeEnter"
-			@enter="myEnter"
-			@after-enter="myAfterEnter">
-			<p v-if="newParaIsVisible">This is the new paragraph</p>
+			name="first"
+			:css="false"
+			@before-enter="firstBeforeEnter"
+			@enter="firstEnter"
+			@after-enter="firstAfterEnter"
+			@before-leave="firstBeforeLeave"
+			@leave="firstLeave"
+			@enter-cancelled="firstEnterCancelled"
+			@leave-cancelled="firstLeaveCancelled">
+			<p v-if="paragIsVisible">This is the first content of the page</p>
 		</transition>
-		<button @click="toggleNewParagraph">New Paragraph</button>
+		<button @click="toggleParagraph">First Content</button>
 	</div>
 </template>
 
 <script>
+import ListData from './components/ListData.vue';
+
 export default {
+	components: { ListData },
 	data() {
 		return {
 			animatedBlock: false,
@@ -66,9 +93,61 @@ export default {
 			paragIsVisible: false,
 			newParaIsVisible: false,
 			usersAreVisible: false,
+			enterInterval: null,
+			leaveInterval: null,
 		};
 	},
 	methods: {
+		firstEnterCancelled(el) {
+			console.log('firstEnterCancelled', el);
+			clearInterval(this.enterInterval);
+		},
+		firstLeaveCancelled(el) {
+			console.log('firstLeaveCancelled', el);
+			clearInterval(this.leaveInterval);
+		},
+		firstBeforeEnter(el) {
+			console.log('firstBeforeEnter');
+			console.log(el);
+
+			el.style.opacity = 0;
+		},
+		firstEnter(el, done) {
+			console.log('firstEnter');
+			console.log(el);
+
+			let round = 1;
+			this.enterInterval = setInterval(() => {
+				el.style.opacity = round * 0.01;
+				if (++round > 100) {
+					clearInterval(this.enterInterval);
+					done();
+				}
+			}, 20);
+		},
+		firstAfterEnter(el) {
+			console.log('firstAfterEnter');
+			console.log(el);
+		},
+		firstBeforeLeave(el) {
+			console.log('firstBeforeLeave');
+			console.log(el);
+
+			el.style.opacity = 1;
+		},
+		firstLeave(el, done) {
+			console.log('firstLeave');
+			console.log(el);
+
+			let round = 1;
+			this.leaveInterval = setInterval(() => {
+				el.style.opacity = 1 - round * 0.01;
+				if (++round > 100) {
+					clearInterval(this.leaveInterval);
+					done();
+				}
+			}, 20);
+		},
 		myBeforeEnter(el) {
 			console.log('myBeforeEnter');
 			console.log(el);
