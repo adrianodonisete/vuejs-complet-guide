@@ -1,18 +1,17 @@
 <template>
 	<section>
-		<h3>{{ finalCounter }}</h3>
+		<h3>{{ counter }}</h3>
+
+		<p>We do more here...</p>
 	</section>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-
 export default {
 	computed: {
-		// counter() {
-		// 	return this.$store.getters.finalCounter;
-		// },
-		...mapGetters(['finalCounter']),
+		counter() {
+			return this.$store.getters.normalizedCounter;
+		},
 	},
 };
 </script>

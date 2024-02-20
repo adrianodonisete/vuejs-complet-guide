@@ -1,24 +1,34 @@
 <template>
+	<base-container title="Auth">
+		<user-auth></user-auth>
+	</base-container>
+
 	<base-container title="Vuex">
+		<the-counter></the-counter>
+		<favorite-value></favorite-value>
+
 		<h3>{{ counter }}</h3>
 		<button @click="addOne">Add 1</button>
+		<button @click="addCounter">Add Counter</button>
 
 		<change-counter></change-counter>
 	</base-container>
-
-	<the-counter></the-counter>
 </template>
 
 <script>
 import BaseContainer from './components/BaseContainer.vue';
 import TheCounter from './components/TheCounter.vue';
 import ChangeCounter from './components/ChangeCounter.vue';
+import FavoriteValue from './components/FavoriteValue.vue';
+import UserAuth from './components/UserAuth.vue';
 
 export default {
 	components: {
 		BaseContainer,
 		TheCounter,
 		ChangeCounter,
+		FavoriteValue,
+		UserAuth,
 	},
 	computed: {
 		counter() {
@@ -28,6 +38,12 @@ export default {
 	methods: {
 		addOne() {
 			this.$store.commit('increment');
+		},
+		addCounter() {
+			this.$store.dispatch({
+				type: 'actionIncrease',
+				value: 10,
+			});
 		},
 	},
 };
