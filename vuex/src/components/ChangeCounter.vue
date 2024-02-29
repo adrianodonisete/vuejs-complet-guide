@@ -13,7 +13,7 @@ export default {
 		// 	this.$store.commit('increase', { value: 2 });
 		// },
 		// ...mapActions(['actionIncrement', 'actionIncrease']),
-		...mapActions({
+		...mapActions('numbers', {
 			increment: 'actionIncrement',
 			increase: 'actionIncrease',
 		}),

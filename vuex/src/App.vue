@@ -3,7 +3,9 @@
 		<user-auth></user-auth>
 	</base-container>
 
-	<base-container title="Vuex">
+	<base-container
+		title="Vuex"
+		v-if="isAuth">
 		<the-counter></the-counter>
 		<favorite-value></favorite-value>
 
@@ -32,16 +34,19 @@ export default {
 	},
 	computed: {
 		counter() {
-			return this.$store.state.counter;
+			return this.$store.state['numbers/counter'];
+		},
+		isAuth() {
+			return this.$store.getters.userIsAuth;
 		},
 	},
 	methods: {
 		addOne() {
-			this.$store.commit('increment');
+			this.$store.commit('numbers/increment');
 		},
 		addCounter() {
 			this.$store.dispatch({
-				type: 'actionIncrease',
+				type: 'numbers/actionIncrease',
 				value: 10,
 			});
 		},
