@@ -1,11 +1,11 @@
 export default {
-	isEmptyCart(state) {
-		console.log(state);
-		return false;
-		// return state.cart.items.lenght === 0;
+	cartTotal(state) {
+		return state.cart.total;
 	},
 	getProds(state) {
-		console.log(state);
 		return state.products;
+	},
+	getCart(state) {
+		return state.cart;
 	},
 };

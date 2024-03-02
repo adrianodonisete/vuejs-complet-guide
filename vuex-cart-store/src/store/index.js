@@ -13,7 +13,6 @@ const store = createStore({
 	state() {
 		return {
 			isLoggedIn: false,
-			allItens: [0, 1, 2, 32, 4, 5],
 		};
 	},
 	mutations: rootMutations,

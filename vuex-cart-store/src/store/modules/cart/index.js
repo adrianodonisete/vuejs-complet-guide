@@ -1,10 +1,11 @@
 import allProducts from './../../content/products.js';
 
 import cartMutations from './mutations.js';
-// import cartActions from './actions.js';
+import cartActions from './actions.js';
 import cartGetters from './getters.js';
 
-export default {
+const cartModule = {
+	namespaced: true,
 	state() {
 		return {
 			products: allProducts,
@@ -12,6 +13,8 @@ export default {
 		};
 	},
 	mutations: cartMutations,
-	// actions: cartActions,
+	actions: cartActions,
 	getters: cartGetters,
 };
+
+export default cartModule;
