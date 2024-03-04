@@ -27,13 +27,7 @@ export default {
 	props: ['id', 'image', 'title', 'price', 'description'],
 	methods: {
 		addToCart() {
-			const productData = {
-				id: this.id,
-				image: this.image,
-				title: this.title,
-				price: this.price,
-			};
-			this.$store.dispatch('cartMod/addProductToCart', productData);
+			this.$store.dispatch('cartMod/addProductToCart', { id: this.id });
 		},
 	},
 };

@@ -22,7 +22,7 @@ export default {
 	},
 	computed: {
 		products() {
-			return this.$store.getters['cartMod/getProds'];
+			return this.$store.getters['prodMod/getProds'];
 		},
 	},
 };

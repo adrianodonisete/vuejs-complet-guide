@@ -2,8 +2,8 @@ export default {
 	cartTotal(state) {
 		return state.cart.total;
 	},
-	getProds(state) {
-		return state.products;
+	cartQuantity(state) {
+		return state.cart.qty;
 	},
 	getCart(state) {
 		return state.cart;

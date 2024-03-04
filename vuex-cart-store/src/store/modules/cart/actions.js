@@ -1,8 +1,11 @@
 export default {
 	addProductToCart(context, payload) {
-		context.commit('addProdCart', payload);
+		const prodId = payload.id;
+		const product = context.rootGetters['prodMod/getProdById'](prodId);
+
+		context.commit('addProdCart', { product });
 	},
 	removeProductToCart(context, payload) {
-		context.commit('removeProdCart', { prodId: payload });
+		context.commit('removeProdCart', payload);
 	},
 };
