@@ -1,6 +1,10 @@
 <template>
 	<section>
-		<b>CoachDetail</b>
+		<b>Coach Detail</b>
+		<br />
+		<router-link to="/coaches/9c89/contact">Contact</router-link>
+
+		<router-view></router-view>
 	</section>
 </template>
 

@@ -1,6 +1,6 @@
 <template>
 	<section>
-		<b>ContactCoach</b>
+		<b>Contact Coach</b>
 	</section>
 </template>
 
