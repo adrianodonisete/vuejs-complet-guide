@@ -1,10 +1,14 @@
 export default {
-	// addProductToCart(context, payload) {
-	// 	const prodId = payload.id;
-	// 	const product = context.rootGetters['prodMod/getProdById'](prodId);
-	// 	context.commit('addProdCart', { product });
-	// },
-	// removeProductToCart(context, payload) {
-	// 	context.commit('removeProdCart', payload);
-	// },
+	registerCoach(context, formData) {
+		const coachData = {
+			id: context.rootGetters.userId,
+			firstName: formData.first,
+			lastName: formData.last,
+			areas: formData.areas,
+			description: formData.desc,
+			hourlyRate: formData.rate,
+		};
+
+		context.commit('registerCoach', coachData);
+	},
 };

@@ -1,5 +1,5 @@
 export default {
-	setAuth(state, payload) {
-		state.isLoggedIn = payload.isAuth;
-	},
+	// setAuth(state, payload) {
+	// 	state.userId = payload.isAuth;
+	// },
 };

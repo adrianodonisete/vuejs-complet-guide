@@ -1,27 +1,22 @@
 <template>
 	<section>
-		<b>CoachRegistration</b>
+		<base-card>
+			<h2>Register as a coach now!</h2>
+			<coach-form @save-data="saveData"></coach-form>
+		</base-card>
 	</section>
 </template>
 
 <script>
-// import ProductItem from '../components/products/ProductItem.vue';
+import CoachForm from '../../components/coaches/CoachForm';
 
 export default {
-	components: {},
-	computed: {
-		products() {
-			return [];
+	components: { CoachForm },
+	methods: {
+		saveData(formData) {
+			this.$store.dispatch('coachMod/registerCoach', formData);
+			this.$router.replace('/coaches');
 		},
 	},
 };
 </script>
-
-<style scoped>
-ul {
-	list-style: none;
-	margin: 2rem auto;
-	padding: 0;
-	max-width: 40rem;
-}
-</style>

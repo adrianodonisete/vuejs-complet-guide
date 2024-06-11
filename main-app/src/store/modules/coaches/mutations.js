@@ -1,5 +1,5 @@
 export default {
-	// addProdCart(state, payload) {
-	// 	state.cart = payload ? [] : ['a'];
-	// },
+	registerCoach(state, payload) {
+		state.coaches.push(payload);
+	},
 };

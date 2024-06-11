@@ -19,14 +19,6 @@
 
 <script>
 export default {
-	computed: {
-		isLoggedIn() {
-			return this.$store.getters.userIsAuth;
-		},
-		cartQty() {
-			return this.$store.getters['cartMod/cartQuantity'];
-		},
-	},
 	methods: {
 		login() {
 			this.$store.dispatch('login');

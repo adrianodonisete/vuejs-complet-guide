@@ -10,11 +10,10 @@ import coachModule from './modules/coaches/index.js';
 const store = createStore({
 	modules: {
 		coachMod: coachModule,
-		// prodMod: productModule,
 	},
 	state() {
 		return {
-			isLoggedIn: false,
+			userId: 'c3',
 		};
 	},
 	mutations: rootMutations,
