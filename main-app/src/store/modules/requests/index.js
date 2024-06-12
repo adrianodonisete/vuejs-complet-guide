@@ -1,17 +1,17 @@
-import cartMutations from './mutations.js';
-import cartActions from './actions.js';
-import cartGetters from './getters.js';
+import mutations from './mutations.js';
+import actions from './actions.js';
+import getters from './getters.js';
 
-const cartModule = {
+const requestModule = {
 	namespaced: true,
 	state() {
 		return {
-			cart: { items: [], total: 0, qty: 0 },
+			requests: [],
 		};
 	},
-	mutations: cartMutations,
-	actions: cartActions,
-	getters: cartGetters,
+	mutations,
+	actions,
+	getters,
 };
 
-export default cartModule;
+export default requestModule;

@@ -1,11 +1,11 @@
 export default {
-	addProductToCart(context, payload) {
-		const prodId = payload.id;
-		const product = context.rootGetters['prodMod/getProdById'](prodId);
-
-		context.commit('addProdCart', { product });
-	},
-	removeProductToCart(context, payload) {
-		context.commit('removeProdCart', payload);
+	contactCoach(context, payload) {
+		const newReq = {
+			id: new Date().toISOString,
+			coachId: payload.coachId,
+			userEmail: payload.email,
+			message: payload.message,
+		};
+		context.commit('addRequest', newReq);
 	},
 };

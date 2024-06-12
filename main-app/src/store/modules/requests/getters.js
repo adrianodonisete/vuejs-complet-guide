@@ -1,11 +1,8 @@
 export default {
-	cartTotal(state) {
-		return state.cart.total;
+	allRequests(state) {
+		return state.requests;
 	},
-	cartQuantity(state) {
-		return state.cart.qty;
-	},
-	getCart(state) {
-		return state.cart;
+	hasRequests(state) {
+		return state.requests && state.requests.length > 0;
 	},
 };

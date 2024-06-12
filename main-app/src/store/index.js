@@ -5,11 +5,12 @@ import rootActions from './actions.js';
 import rootGetters from './getters.js';
 
 import coachModule from './modules/coaches/index.js';
-// import productModule from './modules/products.js';
+import requestModule from './modules/requests/index.js';
 
 const store = createStore({
 	modules: {
 		coachMod: coachModule,
+		requests: requestModule,
 	},
 	state() {
 		return {
