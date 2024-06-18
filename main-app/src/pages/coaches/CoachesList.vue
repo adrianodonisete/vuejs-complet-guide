@@ -6,7 +6,12 @@
 	<section>
 		<base-card>
 			<div class="controls">
-				<base-button mode="outline">Refresh</base-button>
+				<base-button
+					mode="outline"
+					@click="loadCoaches">
+					Refresh
+				</base-button>
+
 				<base-button
 					v-if="!isCoach"
 					isLink
@@ -55,21 +60,19 @@ export default {
 		filteredCoaches() {
 			const coaches = this.$store.getters['coachMod/coaches'];
 			return coaches.filter(coach => {
-				if (this.activeFilters.frontend && coach.areas.includes('frontend')) {
-					return true;
-				}
-				if (this.activeFilters.backend && coach.areas.includes('backend')) {
-					return true;
-				}
-				if (this.activeFilters.career && coach.areas.includes('career')) {
-					return true;
-				}
-				return false;
+				return (
+					(this.activeFilters.frontend && coach.areas.includes('frontend')) ||
+					(this.activeFilters.backend && coach.areas.includes('backend')) ||
+					(this.activeFilters.career && coach.areas.includes('career'))
+				);
 			});
 		},
 		hasCoaches() {
 			return this.$store.getters['coachMod/hasCoaches'];
 		},
+	},
+	created() {
+		this.loadCoaches();
 	},
 	methods: {
 		setFilters(updatedFilters) {
@@ -77,6 +80,9 @@ export default {
 		},
 		checkAreas(areas) {
 			return areas || [];
+		},
+		loadCoaches() {
+			this.$store.dispatch('coachMod/loadCoaches');
 		},
 	},
 };

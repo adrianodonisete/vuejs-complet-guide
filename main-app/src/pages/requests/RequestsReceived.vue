@@ -24,7 +24,7 @@ export default {
 	components: { RequestItem },
 	computed: {
 		receivedRequests() {
-			return this.$store.getters['requests/allRequests'];
+			return this.$store.getters['requests/filterRequests'];
 		},
 		hasRequests() {
 			return this.$store.getters['requests/hasRequests'];
