@@ -17,7 +17,6 @@ export default {
 		});
 
 		if (!response.ok) {
-			// error
 			console.log(response.text());
 		}
 
@@ -26,16 +25,19 @@ export default {
 			id: userId,
 		});
 	},
+	async loadCoaches(context, payload) {
+		if (!payload.forceRefressh && !context.getters.shouldUpdate) {
+			return;
+		}
 
-	async loadCoaches(context) {
 		const response = await fetch(`${FIREBASE_URL}coaches.json`, {
 			method: 'GET',
 		});
 		const data = await response.json();
 
 		if (!response.ok) {
-			// error
-			console.log(response.text());
+			const error = new Error(data.message || 'Failed to fetch!');
+			throw error;
 		}
 
 		const coaches = [];
@@ -54,5 +56,6 @@ export default {
 		}
 
 		context.commit('setCoaches', coaches);
+		context.commit('setFetchTimestamp');
 	},
 };

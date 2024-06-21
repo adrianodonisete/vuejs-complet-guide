@@ -1,4 +1,13 @@
 <template>
+	<base-dialog
+		v-if="!!error"
+		title="An error ocurred"
+		:show="true"
+		:fixed="false"
+		@close="errorHandler">
+		<p>{{ error }}</p>
+	</base-dialog>
+
 	<section>
 		<coach-filter @change-filter="setFilters"></coach-filter>
 	</section>
@@ -8,19 +17,23 @@
 			<div class="controls">
 				<base-button
 					mode="outline"
-					@click="loadCoaches">
+					@click="loadCoaches(true)">
 					Refresh
 				</base-button>
 
 				<base-button
-					v-if="!isCoach"
+					v-if="!isCoach && !isLoading"
 					isLink
 					to="/register">
 					Register as Coach
 				</base-button>
 			</div>
 
-			<ul v-if="hasCoaches">
+			<div v-if="isLoading">
+				<base-spinner></base-spinner>
+			</div>
+
+			<ul v-else-if="hasCoaches">
 				<coach-item
 					v-for="coach in filteredCoaches"
 					:key="coach.id"
@@ -46,6 +59,8 @@ export default {
 	},
 	data() {
 		return {
+			isLoading: false,
+			error: null,
 			activeFilters: {
 				frontend: true,
 				backend: true,
@@ -68,11 +83,11 @@ export default {
 			});
 		},
 		hasCoaches() {
-			return this.$store.getters['coachMod/hasCoaches'];
+			return !this.isLoading && this.$store.getters['coachMod/hasCoaches'];
 		},
 	},
 	created() {
-		this.loadCoaches();
+		this.loadCoaches(false);
 	},
 	methods: {
 		setFilters(updatedFilters) {
@@ -81,8 +96,17 @@ export default {
 		checkAreas(areas) {
 			return areas || [];
 		},
-		loadCoaches() {
-			this.$store.dispatch('coachMod/loadCoaches');
+		async loadCoaches(refresh = false) {
+			this.isLoading = true;
+			try {
+				await this.$store.dispatch('coachMod/loadCoaches', { forceRefressh: refresh });
+			} catch (error) {
+				this.error = error.message || 'Something went wrong! Try it again.';
+			}
+			this.isLoading = false;
+		},
+		errorHandler() {
+			this.error = null;
 		},
 	},
 };
