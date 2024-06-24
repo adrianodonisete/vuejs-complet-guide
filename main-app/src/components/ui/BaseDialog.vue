@@ -5,25 +5,27 @@
 			@click="tryClose"
 			class="backdrop"></div>
 
-		<dialog
-			v-if="show"
-			open>
-			<header>
-				<slot name="header">
-					<h2>{{ title }}</h2>
-				</slot>
-			</header>
+		<transition name="dialog">
+			<dialog
+				v-if="show"
+				open>
+				<header>
+					<slot name="header">
+						<h2>{{ title }}</h2>
+					</slot>
+				</header>
 
-			<section>
-				<slot></slot>
-			</section>
+				<section>
+					<slot></slot>
+				</section>
 
-			<menu v-if="!fixed">
-				<slot name="actions">
-					<base-button @click="tryClose">Close</base-button>
-				</slot>
-			</menu>
-		</dialog>
+				<menu v-if="!fixed">
+					<slot name="actions">
+						<base-button @click="tryClose">Close</base-button>
+					</slot>
+				</menu>
+			</dialog>
+		</transition>
 	</teleport>
 </template>
 
@@ -102,6 +104,23 @@ menu {
 	display: flex;
 	justify-content: flex-end;
 	margin: 0;
+}
+
+.dialog-enter-from,
+.dialog-leave-to {
+	opacity: 0;
+	transform: scale(0.7);
+}
+.dialog-enter-active {
+	transform: all 0.4s ease-out;
+}
+.dialog-leave-active {
+	transform: all 0.4s ease-in;
+}
+.dialog-enter-to,
+.dialog-leave-from {
+	opacity: 1;
+	transform: scale(1);
 }
 
 @media (min-width: 768px) {

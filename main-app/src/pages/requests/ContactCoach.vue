@@ -1,31 +1,33 @@
 <template>
-	<form @submit.prevent="submitForm">
-		<div class="form-control">
-			<label for="email">Your Email</label>
-			<input
-				type="email"
-				id="email"
-				v-model.trim="email" />
-		</div>
+	<div>
+		<form @submit.prevent="submitForm">
+			<div class="form-control">
+				<label for="email">Your Email</label>
+				<input
+					type="email"
+					id="email"
+					v-model.trim="email" />
+			</div>
 
-		<div class="form-control">
-			<label for="email">Message</label>
-			<textarea
-				id="message"
-				v-model.trim="message"
-				rows="5"></textarea>
-		</div>
+			<div class="form-control">
+				<label for="email">Message</label>
+				<textarea
+					id="message"
+					v-model.trim="message"
+					rows="5"></textarea>
+			</div>
 
-		<p
-			class="errors"
-			v-if="!formIsValid">
-			Error! Please enter a valid email and non-empty message.
-		</p>
+			<p
+				class="errors"
+				v-if="!formIsValid">
+				Error! Please enter a valid email and non-empty message.
+			</p>
 
-		<div class="actions">
-			<base-button>Send Message</base-button>
-		</div>
-	</form>
+			<div class="actions">
+				<base-button>Send Message</base-button>
+			</div>
+		</form>
+	</div>
 </template>
 
 <script>
